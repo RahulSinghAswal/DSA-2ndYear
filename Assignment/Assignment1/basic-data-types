@@ -1,0 +1,18 @@
+// HackerRanker https://www.hackerrank.com/challenges/c-tutorial-basic-data-types/submissions/code/289847909
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int main() {
+    
+    int num1;
+    long num2;
+    char char1;
+    float num3;
+    double num4;
+    
+    scanf("%d %ld %c %f %lf", &num1, &num2, &char1, &num3, &num4);
+    printf("%d\n%ld\n%c\n%f\n%lf", num1, num2, char1, num3, num4);
+    return 0;
+}
