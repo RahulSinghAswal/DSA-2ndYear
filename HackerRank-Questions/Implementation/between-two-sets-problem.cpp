@@ -7,18 +7,15 @@ int getTotalX(vector<int> a, vector<int> b) {
     int count = 0;
     for (int i = a[a.size() - 1]; i <= b[0]; i++) {
         for (int j = 0; j < a.size(); j++) {
-            if(i % a[j] == 0){
-                arr.push_back(i);
-            }
-        }
-    }
-    for (int i = 0; i < arr.size(); i++) {
-        for (int j = 0; j < b.size(); j++) {
-            if(b[j] % arr[i] == 0){
-                count++;
-            }
-        }
+            if (i % a[j] == 0){
+                for (int k = 0; k < b.size(); k++){
+                    if (b[0] % i == 0){
+                        count ++;
+                    }
+                }
 
+            } 
+        }
     }
 
     return count;
