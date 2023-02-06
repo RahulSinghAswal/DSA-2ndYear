@@ -58,13 +58,10 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
 }
 
 /*
- * Complete the 'insertNodeAtPosition' function below.
+ * Complete the 'removeDuplicates' function below.
  *
  * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
- * The function accepts following parameters:
- *  1. INTEGER_SINGLY_LINKED_LIST llist
- *  2. INTEGER data
- *  3. INTEGER position
+ * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
  */
 
 /*
@@ -77,57 +74,55 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
  *
  */
 
-SinglyLinkedListNode* insertNodeAtPosition(SinglyLinkedListNode* llist, int data, int position) {
-    SinglyLinkedListNode* temp1 = new SinglyLinkedListNode(data);
-    temp1 -> next = NULL;
-    if (position == 1) {
-        temp1 -> next = llist;
-        llist = temp1;
-    }
-    SinglyLinkedListNode* temp2 = llist;
-    for (int i = 0; i < position - 1; i++) {
-        temp2 = temp2 -> next;
-    }
-    temp1 -> next = temp2 -> next;
-    temp2 -> next = temp1;
-    return llist;
-    
-    
+SinglyLinkedListNode* removeDuplicates(SinglyLinkedListNode* llist) {
+    SinglyLinkedListNode* curr = llist;
 
+    while(curr!= NULL) {
+        if ((curr -> next != NULL) && (curr -> data == curr -> next -> data)) {
+            SinglyLinkedListNode* next_next = curr -> next -> next;
+            SinglyLinkedListNode* nodeToDelete = curr -> next;
+            delete(nodeToDelete);
+            curr -> next = next_next;
+                
+        }
+        else {
+            curr = curr -> next;    
+        }        
+    }
+    
+    return llist;
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    SinglyLinkedList* llist = new SinglyLinkedList();
-
-    int llist_count;
-    cin >> llist_count;
+    int t;
+    cin >> t;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    for (int i = 0; i < llist_count; i++) {
-        int llist_item;
-        cin >> llist_item;
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        SinglyLinkedList* llist = new SinglyLinkedList();
+
+        int llist_count;
+        cin >> llist_count;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        llist->insert_node(llist_item);
+        for (int i = 0; i < llist_count; i++) {
+            int llist_item;
+            cin >> llist_item;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            llist->insert_node(llist_item);
+        }
+
+        SinglyLinkedListNode* llist1 = removeDuplicates(llist->head);
+
+        print_singly_linked_list(llist1, " ", fout);
+        fout << "\n";
+
+        free_singly_linked_list(llist1);
     }
-
-    int data;
-    cin >> data;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    int position;
-    cin >> position;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    SinglyLinkedListNode* llist_head = insertNodeAtPosition(llist->head, data, position);
-
-    print_singly_linked_list(llist_head, " ", fout);
-    fout << "\n";
-
-    free_singly_linked_list(llist_head);
 
     fout.close();
 

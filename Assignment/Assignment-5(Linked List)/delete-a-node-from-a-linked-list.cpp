@@ -36,6 +36,17 @@ class SinglyLinkedList {
         }
 };
 
+void print_singly_linked_list(SinglyLinkedListNode* node, string sep, ofstream& fout) {
+    while (node) {
+        fout << node->data;
+
+        node = node->next;
+
+        if (node) {
+            fout << sep;
+        }
+    }
+}
 
 void free_singly_linked_list(SinglyLinkedListNode* node) {
     while (node) {
@@ -46,7 +57,14 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
     }
 }
 
-// Complete the printLinkedList function below.
+/*
+ * Complete the 'deleteNode' function below.
+ *
+ * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
+ * The function accepts following parameters:
+ *  1. INTEGER_SINGLY_LINKED_LIST llist
+ *  2. INTEGER position
+ */
 
 /*
  * For your reference:
@@ -57,18 +75,27 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
  * };
  *
  */
-void printLinkedList(SinglyLinkedListNode* head) {
-    SinglyLinkedListNode* curr = head;
-    while(curr != NULL) {
-        cout << curr -> data << endl;
-        curr = curr -> next;
-    }
 
+SinglyLinkedListNode* deleteNode(SinglyLinkedListNode* llist, int position) {
+    SinglyLinkedListNode* temp1 = llist;
+    if (position == 0) {
+        llist = temp1 -> next;
+        return llist;
+    }
+    for (int i = 0; i < position -1; i++) {
+        temp1 = temp1 -> next;
+    }
+    SinglyLinkedListNode* temp2 = temp1 -> next;
+    temp1 -> next = temp2 -> next;
+    return llist;
+    
 
 }
 
 int main()
 {
+    ofstream fout(getenv("OUTPUT_PATH"));
+
     SinglyLinkedList* llist = new SinglyLinkedList();
 
     int llist_count;
@@ -83,7 +110,18 @@ int main()
         llist->insert_node(llist_item);
     }
 
-    printLinkedList(llist->head);
+    int position;
+    cin >> position;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    SinglyLinkedListNode* llist1 = deleteNode(llist->head, position);
+
+    print_singly_linked_list(llist1, " ", fout);
+    fout << "\n";
+
+    free_singly_linked_list(llist1);
+
+    fout.close();
 
     return 0;
 }
